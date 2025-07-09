@@ -1,0 +1,12 @@
+.env
+*.ipynb
+venv/
+osc.py
+__pycache__/
+_cache_/
+data/
+main.py
+setup.py
+check_sku.py
+adjusted.
+token.json
