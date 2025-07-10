@@ -6,4 +6,5 @@ Operasional Supply Chain Manager request untuk dibuatkan suatu program yang dapa
 melakukan input data secara manual dari sistem Accurate ke web delivery monitoring yang di mana membutuhkan waktu +/- 1 jam untuk proses penginputan data.
 
 # Solution
-Dibuatkan ETL sederhana untuk menyediakan data yang dibutuhkan admin transport
+- Membuat ETL sederhana untuk mengekstrak, transform, dan load dari hasil ekspor data di Accurate berbentuk file Excel.
+- ETL script ini akan otomatis running setiap file Excel diupdate atau di overwrite.
