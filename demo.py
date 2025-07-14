@@ -145,7 +145,7 @@ def load_to_web(df):
     """
     df_preorder = df.copy()
     
-    COL_TB_PREORDER = ['no_faktur', 'no_po', 'id_customer', 'tgl_faktur', 'nama_penjual', 'term_payment', 'concat_invoice']
+    COL_TB_PREORDER = ['no_faktur', 'no_po', 'id_customer', 'tgl_faktur', 'nama_penjual', 'term_payment', 'concat_sj']
 
     if 'po_expired' in df.columns:
             COL_TB_PREORDER += ['po_expired']
