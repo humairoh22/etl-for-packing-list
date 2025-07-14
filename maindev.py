@@ -3,9 +3,7 @@ import time
 from datetime import datetime
 from demo import *
 
-PATH_LOGBOOK = os.getenv("PATH_LOGBOOK")
-logbook_mt = extract(PATH_LOGBOOK, dtype={'SO NUM':str})
-logbook_mt = transform_logbook(logbook_mt)
+
 
 def process_etl(file):
 
@@ -13,6 +11,10 @@ def process_etl(file):
 
     
     if file == "DATA SMR.xls":
+
+        PATH_LOGBOOK = os.getenv("PATH_LOGBOOK")
+        logbook_mt = extract(PATH_LOGBOOK, dtype={'SO NUM':str})
+        logbook_mt = transform_logbook(logbook_mt)
 
         DIR_SMR_JKT = os.getenv("DIR_SMR_JKT")
         smr_jkt = extract(DIR_SMR_JKT, skip_rows=4)
@@ -44,10 +46,11 @@ def monitoring_files(filepath:list):
     while True:
 
         for curr_path in filepath:
-            # ini buat dapetin waktu update terkini atua saat filenya di overwrite
+            # ini buat dapetin waktu update terkini atau saat filenya di overwrite
             current_update = os.path.getmtime(curr_path)
             file_name_on_update = os.path.basename(curr_path)
 
+            # ngebandingin waktu last update sama current update
             if current_update != last_update[file_name_on_update]:
                 time_modified = datetime.fromtimestamp(current_update)
                 time_modified = time_modified.strftime('%Y-%m-%d %H:%M:%S')
@@ -56,7 +59,7 @@ def monitoring_files(filepath:list):
 
                 process_etl(file_name_on_update)
 
-                # waktu yang update terkini disimpan ke last update sesuai masing masing nama file
+                # waktu yang update terkini bakal disimpan  last update sesuai masing masing nama file
                 last_update[file_name_on_update] = current_update
 
         
