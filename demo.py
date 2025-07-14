@@ -160,22 +160,3 @@ def load_to_web(df):
     preorder_cols_to_update = ['concat_sj', 'customer_id', 'delivery_date']
 
     upsert_mysql(df_preorder, 'preorder', preorder_cols_to_update)
-
-
-if __name__ == "__main__":
-
-    DIR_SMR_JKT = os.getenv("DIR_SMR_JKT")
-    DIR_SMR_DIY = os.getenv("DIR_SMR_DIY")
-    DIR_PANEL = os.getenv("DIR_SW")
-    PATH_LOGBOOK = os.getenv("PATH_LOGBOOK")
-
-    smr_jkt = extract(DIR_SMR_JKT, skip_rows=4)
-    smr_diy = extract(DIR_SMR_DIY, skip_rows=4)
-    logbook = extract(PATH_LOGBOOK, dtype={'SO NUM':str})
-    logbook = transform_logbook(logbook)
-    smr_jkt_cleaned = transform_accurate(smr_jkt, logbook)
-    smr_diy_cleaned = transform_accurate(smr_diy)
-
-
-    load_to_web(smr_jkt_cleaned)
-    load_to_web(smr_diy_cleaned)
