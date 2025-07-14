@@ -77,7 +77,7 @@ def transform_logbook(logbook):
 def transform_accurate(df, logbook=None):
 
     """
-    Untuk mentransformasi data Accurate. Hasil akhir berupa dataframe gabungan data Accurate dan Logbook MT yang sudah di transform
+    Untuk mentransformasi data Accurate. Hasil akhir berupa dataframe gabungan data Accurate JKT dan Logbook MT yang sudah di transform
 
     params:
     -------
@@ -120,7 +120,7 @@ def transform_accurate(df, logbook=None):
     df = df[~df['keterangan'].str.contains('DIY', na=False)]
 
     #buat kolom baru untuk mengisi nilai dari gabungan no faktur, nama customer, dan kota buat bikin packing list
-    df['concat_invoice'] = df.apply(lambda x: '_'.join([x['no_faktur'], x['nama_customer'], x['kota']]) if pd.notnull(x['no_faktur']) 
+    df['concat_sj'] = df.apply(lambda x: '_'.join([x['no_faktur'], x['nama_customer'], x['kota']]) if pd.notnull(x['no_faktur']) 
                                             else None, axis=1)
     
     if logbook is not None :
@@ -152,12 +152,12 @@ def load_to_web(df):
 
     df_preorder = df_preorder[COL_TB_PREORDER] 
 
-    df_preorder = df_preorder.rename(columns={'no_faktur':'no_invoice', 'id_customer':'customer_id', 'tgl_faktur':'order_time', 'nama_penjual':'sales_name'})
+    df_preorder = df_preorder.rename(columns={'no_faktur':'no_sj', 'id_customer':'customer_id', 'tgl_faktur':'delivery_date', 'nama_penjual':'sales_name'})
 
-    df_preorder = df_preorder.dropna(subset=['no_invoice'])
+    df_preorder = df_preorder.dropna(subset=['no_sj'])
     df_preorder = df_preorder.replace({pd.NaT:None, np.nan:None})
 
-    preorder_cols_to_update = ['concat_invoice', 'customer_id', 'order_time']
+    preorder_cols_to_update = ['concat_sj', 'customer_id', 'delivery_date']
 
     upsert_mysql(df_preorder, 'preorder', preorder_cols_to_update)
 
